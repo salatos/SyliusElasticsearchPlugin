@@ -14,8 +14,10 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\AbstractBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\Mapper\ProductTaxonsMapperInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductTaxonsBuilder;
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
+use Elastica\Document;
 use FOS\ElasticaBundle\Event\TransformEvent;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Core\Model\ProductInterface;
 
 final class ProductTaxonsBuilderSpec extends ObjectBehavior
 {
@@ -35,8 +37,11 @@ final class ProductTaxonsBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(TransformEvent $event): void
+    function it_consumes_event(TransformEvent $event, ProductInterface $product, Document $document): void
     {
+        $event->getObject()->willReturn($product);
+        $event->getDocument()->willReturn($document);
+
         $this->consumeEvent($event);
     }
 }
