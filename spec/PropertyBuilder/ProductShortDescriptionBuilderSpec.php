@@ -9,7 +9,7 @@ use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\ProductShortDescriptionBuil
 use BitBag\SyliusElasticsearchPlugin\PropertyBuilder\PropertyBuilderInterface;
 use BitBag\SyliusElasticsearchPlugin\PropertyNameResolver\ConcatedNameResolverInterface;
 use Elastica\Document;
-use FOS\ElasticaBundle\Event\TransformEvent;
+use FOS\ElasticaBundle\Event\AbstractTransformEvent;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ProductInterface;
 
@@ -31,7 +31,7 @@ final class ProductShortDescriptionBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PropertyBuilderInterface::class);
     }
 
-    function it_consumes_event(TransformEvent $event, ProductInterface $product, Document $document): void
+    function it_consumes_event(AbstractTransformEvent $event, ProductInterface $product, Document $document): void
     {
         $event->getObject()->willReturn($product);
         $event->getDocument()->willReturn($document);
